@@ -12,13 +12,13 @@ This is an example of using Terraform to automate EKS cluster creation and appli
 
 `eks.tf` configures the EKS module to create an EKS cluster with two node groups, on demand and spot fleet, across all AZs.
 
-`eks_vars` defines all the variables needed.
+`eks_vars.tf` defines all the variables needed.
 
 ### CI/CD pipeline
 
-`codebuild` creates 3 Codebuild projects: Build, StagingDeploy and ProdDeploy
+`codebuild.tf` creates 3 Codebuild projects: Build, StagingDeploy and ProdDeploy
 
-`codepipeline` creates an CI/CD 3 stage pipeline with the 3 Codebuild projects, plus a manual step for promoting staging to prod.
+`codepipeline.tf` creates an CI/CD 3 stage pipeline with the 3 Codebuild projects, plus a manual step for promoting staging to prod.
 
 `repos.tf` creates CodeCommit git reposity, ECR container registry repo and pipeline artifact bucket
 
@@ -124,10 +124,8 @@ Now in CodePipeline, approve the `PromoteToProd` step, and you should see the ap
  k get svc -n tf-eks-prod --kubeconfig kubeconfig_terraform-eks-dev
  ```
 
-Next change `Hey` in the `main.go` to `Hello!`, commit the code, wait a couple of minutes then do another curl, and you should see new message:
+Next change `Hey` in the `main.go` to `Hello`, commit the code, wait a couple of minutes then do another curl, and you should see new message:
 
 ```
 Hello!, you've requested: /
 ```
-
-
